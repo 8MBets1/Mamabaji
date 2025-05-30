@@ -1,6 +1,5 @@
-// Select all elements with the class "mod-multiChat-smsfloat1"
 document.querySelectorAll('.mod-multiChat-smsfloat1').forEach(function(element) {
-    element.addEventListener('click', function() {
+    element.addEventListener('click', function(event) {
         // Get the full text content of the clicked element
         const textToCopy = element.innerText || element.textContent;
 
@@ -12,13 +11,39 @@ document.querySelectorAll('.mod-multiChat-smsfloat1').forEach(function(element) 
 
         // Copy the text to the clipboard
         try {
-            const successful = document.execCommand('copy');
-            console.log(successful ? 'Text copied to clipboard' : 'Failed to copy text');
+            document.execCommand('copy');
+            // Show a temporary tooltip near the mouse cursor
+            showCopyTooltip(event.pageX, event.pageY);
         } catch (err) {
-            console.error('Oops, unable to copy', err);
+            // Optional: handle error (you could also show a different tooltip)
         }
 
         // Clean up: remove the temporary textarea
         document.body.removeChild(textarea);
     });
 });
+
+function showCopyTooltip(x, y) {
+    const tooltip = document.createElement('div');
+    tooltip.textContent = 'Copied!';
+    tooltip.style.position = 'absolute';
+    tooltip.style.left = `${x + 10}px`; // offset by 10px so it's not directly under the cursor
+    tooltip.style.top = `${y + 10}px`;
+    tooltip.style.padding = '5px 10px';
+    tooltip.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    tooltip.style.color = '#fff';
+    tooltip.style.borderRadius = '4px';
+    tooltip.style.fontSize = '12px';
+    tooltip.style.zIndex = 1000;
+    tooltip.style.transition = 'opacity 0.5s ease';
+    tooltip.style.opacity = '1';
+    document.body.appendChild(tooltip);
+
+    // Fade out and remove the tooltip after a short delay
+    setTimeout(() => {
+        tooltip.style.opacity = '0';
+        setTimeout(() => {
+            document.body.removeChild(tooltip);
+        }, 500);
+    }, 1000); // Tooltip stays visible for 1 second
+}
