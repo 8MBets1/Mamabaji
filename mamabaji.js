@@ -1,4 +1,4 @@
-document.querySelectorAll('.mod-multiChat-smsfloat1').forEach(function(element) {
+document.querySelectorAll('.popover').forEach(function(element) {
     element.addEventListener('click', function(event) {
         // Get the full text content of the clicked element
         const textToCopy = element.innerText || element.textContent;
