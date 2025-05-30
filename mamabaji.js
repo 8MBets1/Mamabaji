@@ -45,5 +45,5 @@ function showCopyTooltip(x, y) {
         setTimeout(() => {
             document.body.removeChild(tooltip);
         }, 500);
-    }, 1000); // Tooltip stays visible for 1 second
+    }, 300); // Tooltip stays visible for 1 second
 }
